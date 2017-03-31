@@ -114,7 +114,7 @@ public:
         }
         vector<int> lengths;
         traceback(length, lengths, eachLen);
-        lengths.push_back(length + 1 - 1);
+        lengths.push_back(length);
 
         int pos = 1;
         for (int j = 1; j < lengths.size(); j++) {
@@ -136,7 +136,11 @@ public:
             }
         }
         file.finish();
+        delete eachBitLen;
+        delete eachLen;
+        delete dp;
         cout << "cmporess finish" << endl;
+
     }
 
     void unCompress(char* filename) {
@@ -202,6 +206,11 @@ public:
             file.read(data[k], realWidth, 1);
         }
         cout << "readfile finish" << endl;
+    }
+
+    ~CompressImage(){
+        delete data;
+        delete header;
     }
 };
 
