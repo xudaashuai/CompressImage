@@ -15,9 +15,13 @@ protected:
     FILE *file;
     unsigned int cache;
     int cacheLength;
+    long len;
 public:
     File(char* filename,char* mode,unsigned int cache,int cacheLength):cacheLength(cacheLength),cache(cache){
-            file=fopen(filename,mode);
+        file=fopen(filename,mode);
+        fseek(file, 0, SEEK_END);
+        len= ftell(file);
+        fseek(file, 0, SEEK_SET);
     }
     virtual void finish(){
         fflush(file);
@@ -25,6 +29,9 @@ public:
     }
     void seek(long offset,int pos){
         fseek(file,offset,pos);
+    }
+    long length() {
+        return len;
     }
     ~File(){
         finish();
