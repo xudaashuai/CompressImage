@@ -12,28 +12,32 @@
 
 class File {
 protected:
-    FILE *file;
+    FILE* file;
     unsigned int cache;
     int cacheLength;
     long len;
 public:
-    File(char* filename,char* mode,unsigned int cache,int cacheLength):cacheLength(cacheLength),cache(cache){
-        file=fopen(filename,mode);
+    File(char* filename, char* mode, unsigned int cache, int cacheLength) : cacheLength(cacheLength), cache(cache) {
+        file = fopen(filename, mode);
         fseek(file, 0, SEEK_END);
-        len= ftell(file);
+        len = ftell(file);
         fseek(file, 0, SEEK_SET);
     }
-    virtual void finish(){
+
+    virtual void finish() {
         fflush(file);
         fclose(file);
     }
-    void seek(long offset,int pos){
-        fseek(file,offset,pos);
+
+    void seek(long offset, int pos) {
+        fseek(file, offset, pos);
     }
+
     long length() {
         return len;
     }
-    ~File(){
+
+    ~File() {
         finish();
     }
 };
